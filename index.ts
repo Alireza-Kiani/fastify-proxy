@@ -5,9 +5,16 @@ const { PORT } = process.env;
 
 const App = fastify();
 
+type LinkInput = {
+    link: string
+}
+
 App.post('/', async (request, reply) => {
-    const myreq: any = request.body;
-    const res = await fetch(myreq.link);
+    let { link }: LinkInput = request.body as any;
+    if (!/^http:\/\/|^https:\/\//g.test(link)) {
+        link = `https://${link}`;
+    }
+    const res = await fetch(link);
     return res.url;
 })
 
