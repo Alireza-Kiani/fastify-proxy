@@ -11,7 +11,7 @@ type LinkInput = {
 
 App.post('/', async (request, reply) => {
     let { link }: LinkInput = request.body as any;
-    if (!/^http:\/\/|^https:\/\//g.test(link)) {
+    if (!/^http:\/\/|^https:\/\//gi.test(link)) {
         link = `https://${link}`;
     }
     const res = await fetch(link);
