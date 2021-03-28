@@ -17,7 +17,7 @@ const start = async () => {
         await App.listen(PORT || 8080)
         console.log('Running on port ' + (PORT || 8080));
     } catch (err) {
-        App.log.error(err)
+        console.log(err);
         process.exit(1)
     }
 }
