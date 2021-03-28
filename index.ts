@@ -1,26 +1,21 @@
 import fastify from 'fastify';
 import fetch from 'node-fetch';
 
+const { PORT } = process.env;
+
 const App = fastify();
 
-App.get('/', async (request, reply) => {
-    // const res = await fetch('https://curli.ir/shortener', {
-    //     method: 'POST',
-    //     headers: {
-    //         'content-type': 'application/json'
-    //     },
-    //     body: JSON.stringify({ link: 'https://google.com' }),
-    //     redirect: 'follow'
-    // });
-    const res = await fetch('https://bit.ly/3fbbG1i')
-    console.log(res);
-    return 'test'
+App.post('/', async (request, reply) => {
+    const myreq: any = request.body;
+    const res = await fetch(myreq.link);
+    return res.url;
 })
 
 // Run the server!
 const start = async () => {
     try {
-        await App.listen(3000)
+        await App.listen(PORT || 8080)
+        console.log('Running on port ' + (PORT || 8080));
     } catch (err) {
         App.log.error(err)
         process.exit(1)
